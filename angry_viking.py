@@ -1,6 +1,7 @@
 import sys
 import pygame
 from settings import Settings
+from board import Board
 
 
 class AngryViking:
@@ -16,6 +17,7 @@ class AngryViking:
         self.bg_color = self.settings.bg_color
         self.settings.screen_height = self.screen.get_rect().height
         self.settings.screen_width = self.screen.get_rect().width
+        self.board = Board(self)
         pygame.display.set_caption("AngryViking")
         
 
@@ -30,11 +32,18 @@ class AngryViking:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys(exit)
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+
+    def _check_keydown_events(self, event):
+        if event.type == pygame.k_Q:
+            sys(exit)
 
     def _update_display(self):
         """helpfunction for updating the screen"""
 
         self.screen.fill(self.settings.bg_color)
+        self.board.blitme()
         pygame.display.flip()
 
     
