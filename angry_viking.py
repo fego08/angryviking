@@ -1,4 +1,5 @@
 import sys
+from turtle import Screen
 import pygame
 from settings import Settings
 from board import Board
@@ -9,15 +10,17 @@ class AngryViking:
 
     def __init__(self):
         """initializes game assets and functions"""
-        # initialize pygame and settings
+        # initialize pygame and assets
         pygame.init()
         self.settings = Settings()
+        self.board = Board()
+        
         # display stuff (keep display.flip() at the end of this block)
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.bg_color = self.settings.bg_color
+        self.rect = self.screen.get_rect()
         self.settings.screen_height = self.screen.get_rect().height
         self.settings.screen_width = self.screen.get_rect().width
-        self.board = Board(self)
         pygame.display.set_caption("AngryViking")
         
 
@@ -29,24 +32,38 @@ class AngryViking:
             self._update_display()
     
     def check_events(self):
+        """checks for keypresses etc"""
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys(exit)
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
+   
+    def draw_board(self):
+        """draws the gameboard"""
+
+        for i in range(1,12):
+            for j in range(1,12):
+                    pygame.draw.rect(self.board.surface, self.board.cell_color, 
+                    (self.board.cell_size * i ,self.board.cell_size * j,
+                    self.board.cell_size, self.board.cell_size), 
+                    1)
 
     def _check_keydown_events(self, event):
-        if event.type == pygame.k_Q:
-            sys(exit)
+        """helpfunction for keydown events"""
+
+        if event.key == pygame.K_q:
+            sys.exit()
 
     def _update_display(self):
         """helpfunction for updating the screen"""
 
         self.screen.fill(self.settings.bg_color)
-        self.board.blitme()
+        self.draw_board()
         pygame.display.flip()
 
-    
+
 if __name__ == ("__main__"):
 
     av = AngryViking()
