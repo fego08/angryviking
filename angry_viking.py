@@ -45,7 +45,7 @@ class AngryViking:
 
         for i in range(1,12):
             for j in range(1,12):
-                    pygame.draw.rect(self.board.surface, self.board.cell_color, 
+                    pygame.draw.rect(self.screen, self.board.cell_color, 
                     (self.board.cell_size * i ,self.board.cell_size * j,
                     self.board.cell_size, self.board.cell_size), 
                     1)
