@@ -1,9 +1,8 @@
 import sys
-from turtle import Screen
 import pygame
 from settings import Settings
 from board import Board
-
+from gamepieces import Gamepieces
 
 class AngryViking:
     """main game class"""
@@ -14,9 +13,11 @@ class AngryViking:
         pygame.init()
         self.settings = Settings()
         self.board = Board()
-        
+        self.gamepieces = Gamepieces()
+
         # display stuff (keep display.flip() at the end of this block)
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.screen = pygame.display.set_mode((self.settings.screen_width, 
+        self.settings.screen_height))
         self.bg_color = self.settings.bg_color
         self.rect = self.screen.get_rect()
         self.settings.screen_height = self.screen.get_rect().height
@@ -50,6 +51,13 @@ class AngryViking:
                     self.board.cell_size, self.board.cell_size), 
                     1)
 
+    def draw_pieces(self):
+        """draws the gamepieces"""
+
+        self.attacker = pygame.draw.circle(self.screen, 
+        self.gamepieces.att_color, (40, 40), 20.0)
+
+        
     def _check_keydown_events(self, event):
         """helpfunction for keydown events"""
 
@@ -61,6 +69,7 @@ class AngryViking:
 
         self.screen.fill(self.settings.bg_color)
         self.draw_board()
+        self.draw_pieces()
         pygame.display.flip()
 
 
