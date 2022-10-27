@@ -43,19 +43,52 @@ class AngryViking:
    
     def draw_board(self):
         """draws the gameboard"""
-
-        for i in range(1,12):
-            for j in range(1,12):
-                    pygame.draw.rect(self.screen, self.board.cell_color, 
-                    (self.board.cell_size * i ,self.board.cell_size * j,
-                    self.board.cell_size, self.board.cell_size), 
-                    1)
+        
+        # draws base board
+        for i in range(1, self.board.COLUMNS):
+            for j in range(1, self.board.ROWS):
+                pygame.draw.rect(
+                    self.screen, self.board.cell_color, (
+                        self.board.cell_size * i, self.board.cell_size * j, 
+                        self.board.cell_size, self.board.cell_size
+                    )
+                )
+                cell = pygame.draw.rect(
+                    self.screen, self.board.border_color, (
+                        self.board.cell_size * i, self.board.cell_size * j, 
+                        self.board.cell_size, self.board.cell_size
+                    ), 1
+                )
+                if len(self.board.cells) <= 120:
+                    self.board.cells.append(cell)
+                if (
+                    i == 1 and j == 1
+                ) or (
+                    i == 11 and j == 1
+                ) or (
+                    i == 1 and j == 11
+                ) or (
+                    i == 11 and j == 11
+                ) or  (
+                    i == 6 and j == 6
+                ):
+                    pygame.draw.rect(
+                        self.screen, self.board.castle_color, (
+                            self.board.cell_size * i, self.board.cell_size * j, 
+                            self.board.cell_size, self.board.cell_size
+                        )
+                    )
+                    pygame.draw.rect(
+                        self.screen, self.board.border_color, (
+                            self.board.cell_size * i, self.board.cell_size * j, 
+                            self.board.cell_size, self.board.cell_size
+                    ), 1
+                )
+        
 
     def draw_pieces(self):
         """draws the gamepieces"""
 
-        self.attacker = pygame.draw.circle(self.screen, 
-        self.gamepieces.att_color, (40, 40), 20.0)
 
         
     def _check_keydown_events(self, event):
