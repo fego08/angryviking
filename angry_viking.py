@@ -103,6 +103,7 @@ class AngryViking:
         self.screen.fill(self.settings.bg_color)
         self.draw_board()
         self.draw_pieces()
+        self.gamepieces.blitme()
         pygame.display.flip()
 
 
