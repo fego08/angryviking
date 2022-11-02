@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from board import Board
 from gamepieces import Gamepieces
+from king import King
 
 class AngryViking:
     """main game class"""
@@ -14,6 +15,8 @@ class AngryViking:
         self.settings = Settings()
         self.board = Board()
         self.gamepieces = Gamepieces()
+        self.defenders = pygame.sprite.Group()
+        self.board.draw_board()
 
         # display stuff (keep display.flip() at the end of this block)
         self.screen = pygame.display.set_mode((self.settings.screen_width, 
@@ -29,6 +32,7 @@ class AngryViking:
         """main game loop"""
 
         while True:
+
             self.check_events()
             self._update_display()
     
@@ -37,76 +41,34 @@ class AngryViking:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys(exit)
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
-   
-    def draw_board(self):
-        """draws the gameboard"""
-        
-        # draws base board
-        for i in range(1, self.board.COLUMNS):
-            for j in range(1, self.board.ROWS):
-                pygame.draw.rect(
-                    self.screen, self.board.cell_color, (
-                        self.board.cell_size * i, self.board.cell_size * j, 
-                        self.board.cell_size, self.board.cell_size
-                    )
-                )
-                cell = pygame.draw.rect(
-                    self.screen, self.board.border_color, (
-                        self.board.cell_size * i, self.board.cell_size * j, 
-                        self.board.cell_size, self.board.cell_size
-                    ), 1
-                )
-                if len(self.board.cells) <= 120:
-                    self.board.cells.append(cell)
-                if (
-                    i == 1 and j == 1
-                ) or (
-                    i == 11 and j == 1
-                ) or (
-                    i == 1 and j == 11
-                ) or (
-                    i == 11 and j == 11
-                ) or  (
-                    i == 6 and j == 6
-                ):
-                    pygame.draw.rect(
-                        self.screen, self.board.castle_color, (
-                            self.board.cell_size * i, self.board.cell_size * j, 
-                            self.board.cell_size, self.board.cell_size
-                        )
-                    )
-                    pygame.draw.rect(
-                        self.screen, self.board.border_color, (
-                            self.board.cell_size * i, self.board.cell_size * j, 
-                            self.board.cell_size, self.board.cell_size
-                    ), 1
-                )
-        
-
-    def draw_pieces(self):
-        """draws the gamepieces"""
-
-
         
     def _check_keydown_events(self, event):
         """helpfunction for keydown events"""
 
         if event.key == pygame.K_q:
             sys.exit()
-
+        if event.key == pygame.K_u:
+            print(self.board.cells[61])
+        if event.key == pygame.K_z:
+            self._set_start_pos()
+        
     def _update_display(self):
         """helpfunction for updating the screen"""
 
         self.screen.fill(self.settings.bg_color)
-        self.draw_board()
-        self.draw_pieces()
+        self.board.draw_board()
         self.gamepieces.blitme()
+        self.defenders.draw(self.screen)
         pygame.display.flip()
 
+    def _set_start_pos(self):
 
+        self.king = King()
+        self.defenders.add(self.king)
+    
 if __name__ == ("__main__"):
 
     av = AngryViking()
