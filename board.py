@@ -61,3 +61,12 @@ class Board:
                             self.cell_size, self.cell_size
                     ), 1
                 )
+    def get_coords(self):
+        """takes coords from cells[] and puts into dict for future use"""
+
+        i = 0
+        self.coordinates = {}
+        for x in self.cells[:]:
+            self.coordinates[i] = x
+            i += 1
+        

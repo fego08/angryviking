@@ -3,8 +3,8 @@ from settings import Settings
 from board import Board
 from pygame.sprite import Sprite
 
-class King(Sprite):
-    
+class Attacker(Sprite):
+
     def __init__(self):
         super().__init__()
         
@@ -16,9 +16,9 @@ class King(Sprite):
             self.settings.screen_height
         ))
         self.screen_rect = self.screen.get_rect()
-
+        
         self.image = pygame.transform.scale(
-            pygame.image.load("images/king.gif"), (
+            pygame.image.load("images/attacker.gif"), (
                 self.board.cell_size, self.board.cell_size
             )
         )

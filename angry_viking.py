@@ -2,8 +2,9 @@ import sys
 import pygame
 from settings import Settings
 from board import Board
-from gamepieces import Gamepieces
 from king import King
+from defender import Defender
+from attacker import Attacker
 
 class AngryViking:
     """main game class"""
@@ -14,9 +15,13 @@ class AngryViking:
         pygame.init()
         self.settings = Settings()
         self.board = Board()
-        self.gamepieces = Gamepieces()
+        self.king = King()
+        self.defender = Defender()
+        self.attacker = Attacker()
         self.defenders = pygame.sprite.Group()
+        self.attackers = pygame.sprite.Group()
         self.board.draw_board()
+        self.board.get_coords()
 
         # display stuff (keep display.flip() at the end of this block)
         self.screen = pygame.display.set_mode((self.settings.screen_width, 
@@ -51,23 +56,27 @@ class AngryViking:
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_u:
-            print(self.board.cells[61])
-        if event.key == pygame.K_z:
-            self._set_start_pos()
+            self._set_start()
         
     def _update_display(self):
         """helpfunction for updating the screen"""
 
         self.screen.fill(self.settings.bg_color)
         self.board.draw_board()
-        self.gamepieces.blitme()
         self.defenders.draw(self.screen)
+        self.attackers.draw(self.screen)
         pygame.display.flip()
 
-    def _set_start_pos(self):
+    def _set_start(self):
+        """sets up the pieces"""
 
-        self.king = King()
+        self.king.rect.center = self.board.coordinates[60]
         self.defenders.add(self.king)
+        self.defender.rect.center= self.board.coordinates[1]
+        self.defenders.add(self.defender)
+        self.attacker.rect.center = self.board.coordinates[120]
+        self.attackers.add(self.attacker)
+
     
 if __name__ == ("__main__"):
 
