@@ -70,11 +70,11 @@ class AngryViking:
     def _set_start(self):
         """sets up the pieces"""
 
-        self.king.rect.center = self.board.coordinates[60]
+        self.king.rect.center = self.board.coordinates[61]
         self.defenders.add(self.king)
         self.defender.rect.center= self.board.coordinates[1]
         self.defenders.add(self.defender)
-        self.attacker.rect.center = self.board.coordinates[120]
+        self.attacker.rect.center = self.board.coordinates[121]
         self.attackers.add(self.attacker)
 
     

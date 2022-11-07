@@ -64,9 +64,8 @@ class Board:
     def get_coords(self):
         """takes coords from cells[] and puts into dict for future use"""
 
-        i = 0
         self.coordinates = {}
-        for x in self.cells[:]:
+        for i, x in enumerate(self.cells[:], start=1):
             self.coordinates[i] = x
-            i += 1
+    
         
