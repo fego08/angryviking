@@ -68,8 +68,4 @@ class Board:
         self.coordinates = {}
         for i, x in enumerate(self.cells[:], start=1):
             self.coordinates[i] = x
-    
-        # self.sidesqrl = self.coordinates.keys[1, 12, 23, 34, 45, 56, 67, 78, 89, 100, 111]
-        # self.sidesqrr = self.coordinates.keys[11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 121]
-        # self.topsqr = self.coordinates.keys[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        # self.bottomsqr = self.coordinates.keys[111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
+        

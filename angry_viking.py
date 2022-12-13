@@ -59,15 +59,23 @@ class AngryViking:
 
         if event.key == pygame.K_q:
             sys.exit()
+        if event.key == pygame.K_t:
+            print(self.selector.rect.top)
+            print(self.selector.rect.left)
+            print(self.selector.rect.right)
+            print(self.selector.rect.bottom)
         if event.key == pygame.K_DOWN:
-            if self.selector.rect.center != self.board.coordinates.items[111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]:
+            if self.selector.rect.bottom != 720:
                 self.selector.rect.centery += 60
         if event.key == pygame.K_UP:
-            self.selector.rect.centery -= 60
+            if self.selector.rect.top != 120:
+                self.selector.rect.centery -= 60
         if event.key == pygame.K_LEFT:
-            self.selector.rect.centerx -= 60
+            if self.selector.rect.left != 120:
+                self.selector.rect.centerx -= 60
         if event.key == pygame.K_RIGHT:
-            self.selector.rect.centerx += 60
+            if self.selector.rect.right != 720:
+                self.selector.rect.centerx += 60
 
     def _update_display(self):
         """helpfunction for updating the screen"""
