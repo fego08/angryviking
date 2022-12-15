@@ -6,6 +6,8 @@ from king import King
 from defender import Defender
 from attacker import Attacker
 from selector import Selector
+from movehandler import Player
+from movehandler import Movehandler
 
 class AngryViking:
     """main game class"""
@@ -23,6 +25,11 @@ class AngryViking:
         self.selectors = pygame.sprite.Group()
         self.defenders = pygame.sprite.Group()
         self.attackers = pygame.sprite.Group()
+        self.selectors_position = ()
+        self.defenders_position = []
+        self.attackers_position = []
+        self.Player = Player()
+        self.movehandler = Movehandler()
         self.board.draw_board()
         self.board.get_coords()
         self._set_start()
@@ -60,22 +67,25 @@ class AngryViking:
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_t:
-            print(self.selector.rect.top)
-            print(self.selector.rect.left)
-            print(self.selector.rect.right)
-            print(self.selector.rect.bottom)
+            pass
         if event.key == pygame.K_DOWN:
             if self.selector.rect.bottom != 720:
                 self.selector.rect.centery += 60
+                self._update_selector_coordinates()
         if event.key == pygame.K_UP:
-            if self.selector.rect.top != 120:
+            if self.selector.rect.top != 60:
                 self.selector.rect.centery -= 60
+                self._update_selector_coordinates()
         if event.key == pygame.K_LEFT:
-            if self.selector.rect.left != 120:
+            if self.selector.rect.left != 60:
                 self.selector.rect.centerx -= 60
+                self._update_selector_coordinates()
         if event.key == pygame.K_RIGHT:
             if self.selector.rect.right != 720:
                 self.selector.rect.centerx += 60
+                self._update_selector_coordinates()
+        if event.key == pygame.K_SPACE:
+            self._select_piece()
 
     def _update_display(self):
         """helpfunction for updating the screen"""
@@ -105,6 +115,29 @@ class AngryViking:
             self.attacker_new = Attacker()
             self.attacker_new.rect.center = self.board.coordinates[sqr]
             self.attacker_new.add(self.attackers)
+        self._get_piece_coordinates()
+
+    def _get_piece_coordinates(self):
+        
+        for defender in self.defenders:
+            self.defenders_position.append(defender.rect.center)
+        for attacker in self.attackers:
+            self.attackers_position.append(attacker.rect.center)
+
+    def _update_selector_coordinates(self):
+
+        for selector in self.selectors:
+            self.selectors_position = selector.rect.center
+        
+    def _select_piece(self):
+
+        if self.selectors_position in self.defenders_position:
+            print("Defender Selected!")
+        elif self.selectors_position in self.attackers_position:
+            print("Attacker Selected!")
+        else:
+            print("No piece here!")
+
     
 if __name__ == ("__main__"):
 

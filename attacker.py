@@ -14,7 +14,7 @@ class Attacker(Sprite):
             4, 5, 6, 7, 8, 17, 34, 45, 56, 67, 78, 57, 114, 115, 116, 117, 118, 105, 44, 55, 66, 77, 88, 65
         ]
     
-        self.screen = self.screen = pygame.display.set_mode((
+        self.screen = pygame.display.set_mode((
             self.settings.screen_width, 
             self.settings.screen_height
         ))
