@@ -17,6 +17,7 @@ class Board:
         self.cell_color = ((239, 245, 203))
         self.cell_size = 60
         self.castle_color = ((53, 115, 109))
+        self.coordinates = {}
 
     def draw_board(self):
         """draws the gameboard"""
@@ -68,4 +69,11 @@ class Board:
         self.coordinates = {}
         for i, x in enumerate(self.cells[:], start=1):
             self.coordinates[i] = x
+        self.coordinates = self.coordinates
+
+    def get_square_num(self, coords):
+
+        sqr_num = [k for k, v in self.coordinates.items() if v == coords][0]
+        return sqr_num
+
         

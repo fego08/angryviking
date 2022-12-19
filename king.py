@@ -25,3 +25,4 @@ class King(Sprite):
         )
         self.rect = self.image.get_rect()
         self.active = False
+        self.position = ()

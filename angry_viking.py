@@ -25,7 +25,7 @@ class AngryViking:
         self.selectors = pygame.sprite.Group()
         self.defenders = pygame.sprite.Group()
         self.attackers = pygame.sprite.Group()
-        self.selectors_position = ()
+        self.selectors_position = []
         self.defenders_position = []
         self.attackers_position = []
         self.Player = Player()
@@ -67,7 +67,7 @@ class AngryViking:
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_t:
-            pass
+            self.board.get_square_num((390, 390))
         if event.key == pygame.K_DOWN:
             if self.selector.rect.bottom != 720:
                 self.selector.rect.centery += 60
@@ -115,9 +115,9 @@ class AngryViking:
             self.attacker_new = Attacker()
             self.attacker_new.rect.center = self.board.coordinates[sqr]
             self.attacker_new.add(self.attackers)
-        self._get_piece_coordinates()
+        self._get_start_coordinates()
 
-    def _get_piece_coordinates(self):
+    def _get_start_coordinates(self):
         
         for defender in self.defenders:
             self.defenders_position.append(defender.rect.center)
@@ -133,6 +133,10 @@ class AngryViking:
 
         if self.selectors_position in self.defenders_position:
             print("Defender Selected!")
+            print(self.selectors_position)
+            for defender in self.defenders.sprites():
+                if self.selectors_position == defender.rect.center:
+                    self.movehandler.determine_legal_moves(self.selectors_position)
         elif self.selectors_position in self.attackers_position:
             print("Attacker Selected!")
         else:
