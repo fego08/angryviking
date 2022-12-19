@@ -29,16 +29,13 @@ class Movehandler:
         self.is_attacker = False
         self.is_defender = False
         self.is_active = False
-        self.legal_moves = {}
-    
-    def select_piece(self):
-        pass
+        self.legal_moves = []
 
-    def determine_legal_moves(self):
+
+    def determine_legal_moves(self, defender_rect):
+
+        self.board.get_square_num(defender_rect)
         
-        pass
-
-
     def show_legal_moves(self):
         if self.is_active == True:
             pass
