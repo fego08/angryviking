@@ -18,6 +18,9 @@ class Board:
         self.cell_size = 60
         self.castle_color = ((53, 115, 109))
         self.coordinates = {}
+        self.sqr_num = 0
+        self.ranks = {}
+        self.files = {}
 
     def draw_board(self):
         """draws the gameboard"""
@@ -72,8 +75,31 @@ class Board:
         self.coordinates = self.coordinates
 
     def get_square_num(self, coords):
+        """gets key from coords value"""
 
-        sqr_num = [k for k, v in self.coordinates.items() if v == coords][0]
-        return sqr_num
+        for k, v in self.coordinates.items():
+            if coords == v:
+                return k
+                
 
-        
+    def define_ranks_files(self):
+
+        rank1 = [i for i in range(1, 12)]
+        rank2 = [i for i in range(12, 23)]
+        rank3 = [i for i in range(23, 34)]
+        rank4 = [i for i in range(34, 45)]
+        rank5 = [i for i in range(45, 56)]
+        rank6 = [i for i in range(56, 67)]
+        rank7 = [i for i in range(67, 78)]
+        rank8 = [i for i in range(78, 89)]
+        rank9 = [i for i in range(89, 100)]
+        rank10 = [i for i in range(100, 111)]
+        rank11 = [i for i in range(111, 122)]
+
+        for k, v in self.coordinates.items():
+            if k in rank1:
+                sqrs = [].append(v)
+            else: 
+                self.ranks[1] = sqrs
+
+        print(self.ranks)
