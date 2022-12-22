@@ -67,7 +67,7 @@ class AngryViking:
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_t:
-            self.board.get_square_num((390, 390))
+            print(self.board.get_square_num(self.selectors_position))
         if event.key == pygame.K_DOWN:
             if self.selector.rect.bottom != 720:
                 self.selector.rect.centery += 60
@@ -132,11 +132,12 @@ class AngryViking:
     def _select_piece(self):
 
         if self.selectors_position in self.defenders_position:
-            print("Defender Selected!")
-            print(self.selectors_position)
             for defender in self.defenders.sprites():
                 if self.selectors_position == defender.rect.center:
-                    self.movehandler.determine_legal_moves(self.selectors_position)
+                    current_sqr = self.board.get_square_num(self.selectors_position)
+                    self.movehandler.get_legal_moves(current_sqr)
+                
+
         elif self.selectors_position in self.attackers_position:
             print("Attacker Selected!")
         else:

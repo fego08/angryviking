@@ -30,14 +30,35 @@ class Movehandler:
         self.is_defender = False
         self.is_active = False
         self.legal_moves = []
+        self.edgesquares = [
+            1,2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,110,121,12,23,34,45,56,67,78,89,100,111,112,113,114,115,116,117,118,119,120
+        ]
+    def get_legal_moves(self, square):
 
-
-    def determine_legal_moves(self, defender_rect):
-
-        self.board.get_square_num(defender_rect)
+        # right
+        for i in range(12):
+            x = square + i
+            self.legal_moves.append(x)
+            if x in self.edgesquares:
+                break
+            y = square - i
+            if y != square:
+                self.legal_moves.append(y)
+            if y in self.edgesquares:
+                break
+            z = square + i*11
+            if z != square:
+                self.legal_moves.append(z)
+            if z in self.edgesquares:
+                break
+            p = square - i*11
+            if p != square:
+                self.legal_moves.append(p)
+            if p in self.edgesquares:
+                break
+        print(sorted(self.legal_moves))
+        self.legal_moves = []
         
-    def show_legal_moves(self):
-        if self.is_active == True:
-            pass
-            # highlight legal squares
-            # pygame.draw.rect(self.screen_rect, (255, 0, 0), asdf)
+    def show_legal_moves(self, setsqr):
+        
+        pass
