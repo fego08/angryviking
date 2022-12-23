@@ -30,35 +30,45 @@ class Movehandler:
         self.is_defender = False
         self.is_active = False
         self.legal_moves = []
-        self.edgesquares = [
-            1,2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,110,121,12,23,34,45,56,67,78,89,100,111,112,113,114,115,116,117,118,119,120
-        ]
+        self.leftsquares = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        self.topsquares = [12, 23, 34, 45, 56, 67, 78, 89, 100, 111]
+        self.bottomsquares = [11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 121]
+        self.rightsquares = [111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
+        self.legal_squares = []
+    
     def get_legal_moves(self, square):
-
-        # right
+        """gets squarenumbers of legal squares"""
+        
         for i in range(12):
             x = square + i
             self.legal_moves.append(x)
-            if x in self.edgesquares:
+            if x in self.bottomsquares:
                 break
+        for i in range(12):
             y = square - i
             if y != square:
                 self.legal_moves.append(y)
-            if y in self.edgesquares:
+            if y in self.topsquares:
                 break
+        for i in range(12):
             z = square + i*11
             if z != square:
                 self.legal_moves.append(z)
-            if z in self.edgesquares:
+            if z in self.rightsquares:
                 break
+        for i in range(12):
             p = square - i*11
             if p != square:
                 self.legal_moves.append(p)
-            if p in self.edgesquares:
+            if p in self.leftsquares:
                 break
-        print(sorted(self.legal_moves))
+        self.show_legal_moves(self.legal_moves)
         self.legal_moves = []
         
-    def show_legal_moves(self, setsqr):
+    def show_legal_moves(self, squares):
         
-        pass
+        for square in squares:
+            
+            coord = self.settings.coordinates[square]
+            self.legal_squares.append(coord)
+    
