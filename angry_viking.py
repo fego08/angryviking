@@ -44,6 +44,7 @@ class AngryViking:
         pygame.display.set_caption("AngryViking")
         
 
+
     def run_game(self):
         """main game loop"""
 
@@ -67,7 +68,7 @@ class AngryViking:
         if event.key == pygame.K_q:
             sys.exit()
         if event.key == pygame.K_t:
-            print(self.board.coordinates)
+            pass
         if event.key == pygame.K_DOWN:
             if self.selector.rect.bottom != 720:
                 self.selector.rect.centery += 60
@@ -85,7 +86,10 @@ class AngryViking:
                 self.selector.rect.centerx += 60
                 self._update_selector_coordinates()
         if event.key == pygame.K_SPACE:
-            self._select_piece()
+            # if self.movehandler.is_active == False:
+                self._select_piece()
+            # if self.movehandler.is_active == True:
+                pass
 
     def _update_display(self):
         """helpfunction for updating the screen"""
@@ -95,8 +99,9 @@ class AngryViking:
         self.defenders.draw(self.screen)
         self.attackers.draw(self.screen)
         self.selectors.draw(self.screen)
-        for square in self.movehandler.legal_squares:
-            pygame.draw.rect(self.screen, (255, 0, 0), (square[0], square[1], 60, 60))
+        if self.movehandler.is_active == True:
+            for square in self.movehandler.legal_squares:
+                pygame.draw.circle(self.screen, (255, 0, 0), (square[0], square[1]), 10.0)
         pygame.display.flip()
 
     def _set_start(self):
@@ -123,8 +128,10 @@ class AngryViking:
         
         for defender in self.defenders:
             self.defenders_position.append(defender.rect.center)
+            self.movehandler.defender_coords.append(defender.rect.center)
         for attacker in self.attackers:
             self.attackers_position.append(attacker.rect.center)
+            self.movehandler.attacker_coords.append(attacker.rect.center)
 
     def _update_selector_coordinates(self):
 
@@ -138,13 +145,10 @@ class AngryViking:
                 if self.selectors_position == defender.rect.center:
                     current_sqr = self.board.get_square_num(self.selectors_position)
                     self.movehandler.get_legal_moves(current_sqr)
-                
-
         elif self.selectors_position in self.attackers_position:
             print("Attacker Selected!")
         else:
             print("No piece here!")
-
     
 if __name__ == ("__main__"):
 

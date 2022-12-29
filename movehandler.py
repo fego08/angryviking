@@ -34,11 +34,27 @@ class Movehandler:
         self.topsquares = [12, 23, 34, 45, 56, 67, 78, 89, 100, 111]
         self.bottomsquares = [11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 121]
         self.rightsquares = [111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
+        self.attacker_coords = []
+        self.attacker_sqrs = []
+        self.defender_coords = []
+        self.defender_sqrs = []
         self.legal_squares = []
     
     def get_legal_moves(self, square):
         """gets squarenumbers of legal squares"""
         
+        self.is_active = True
+
+        for coord in self.attacker_coords:
+            for k, v in self.settings.coordinates.items():
+                if coord == v:
+                    self.attacker_sqrs.append(k)
+        
+        for coord in self.defender_coords:
+            for k, v in self.settings.coordinates.items():
+                if coord == v:
+                    self.defender_sqrs.append(k)
+
         for i in range(12):
             x = square + i
             self.legal_moves.append(x)
@@ -62,13 +78,18 @@ class Movehandler:
                 self.legal_moves.append(p)
             if p in self.leftsquares:
                 break
-        self.show_legal_moves(self.legal_moves)
+        for move in self.legal_moves:
+            if move in self.attacker_sqrs:
+                self.legal_moves.remove(move)
+        
+        self.legal_moves = [x for x in self.legal_moves if x not in self.attacker_sqrs]
+        self.legal_moves = [x for x in self.legal_moves if x not in self.defender_sqrs]
+        self.write_legal_moves(self.legal_moves)
         self.legal_moves = []
         
-    def show_legal_moves(self, squares):
+    def write_legal_moves(self, squares):
         
         for square in squares:
             
             coord = self.settings.coordinates[square]
             self.legal_squares.append(coord)
-    
