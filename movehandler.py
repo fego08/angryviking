@@ -44,7 +44,7 @@ class Movehandler:
         """gets squarenumbers of legal squares"""
         
         self.is_active = True
-
+        
         for coord in self.attacker_coords:
             for k, v in self.settings.coordinates.items():
                 if coord == v:
@@ -57,7 +57,8 @@ class Movehandler:
 
         for i in range(12):
             x = square + i
-            self.legal_moves.append(x)
+            if x != square:
+                    self.legal_moves.append(x)
             if x in self.bottomsquares:
                 break
         for i in range(12):
