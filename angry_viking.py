@@ -25,6 +25,7 @@ class AngryViking:
         self.selectors = pygame.sprite.Group()
         self.defenders = pygame.sprite.Group()
         self.attackers = pygame.sprite.Group()
+        self.active_piece = pygame.sprite.Group()
         self.selectors_position = []
         self.defenders_position = []
         self.attackers_position = []
@@ -86,10 +87,10 @@ class AngryViking:
                 self.selector.rect.centerx += 60
                 self._update_selector_coordinates()
         if event.key == pygame.K_SPACE:
-            # if self.movehandler.is_active == False:
+            if self.movehandler.is_active == False:
                 self._select_piece()
-            # if self.movehandler.is_active == True:
-                pass
+            elif self.movehandler.is_active == True:
+                self._move_piece()
 
     def _update_display(self):
         """helpfunction for updating the screen"""
@@ -143,6 +144,7 @@ class AngryViking:
         if self.selectors_position in self.defenders_position:
             for defender in self.defenders.sprites():
                 if self.selectors_position == defender.rect.center:
+                    defender.add(self.active_piece)
                     current_sqr = self.board.get_square_num(self.selectors_position)
                     self.movehandler.get_legal_moves(current_sqr)
         elif self.selectors_position in self.attackers_position:
@@ -150,6 +152,23 @@ class AngryViking:
         else:
             print("No piece here!")
     
+    
+    def _move_piece(self):
+        
+        if self.selectors_position not in self.defenders_position:
+            if self.selectors_position not in self.attackers_position:
+                if self.selectors_position in self.movehandler.legal_squares:
+                    for defender in self.defenders.sprites():
+                        if defender in self.active_piece.sprites():
+                            defender.rect.center = self.selectors_position
+                            defender.remove(self.active_piece)       
+        self.movehandler.legal_squares = []
+        self.movehandler.is_active = False
+        self.defenders_position = []
+        self.movehandler.defender_coords = []
+        self.attackers_position = []
+        self.movehandler.attacker_coords = []
+        self._get_start_coordinates()
 if __name__ == ("__main__"):
 
     av = AngryViking()

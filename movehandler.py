@@ -55,30 +55,42 @@ class Movehandler:
                 if coord == v:
                     self.defender_sqrs.append(k)
 
-        for i in range(12):
+        for i in range(1, 12):
             x = square + i
             if x != square:
                     self.legal_moves.append(x)
+            if x in self.defender_sqrs:
+                break
             if x in self.bottomsquares:
                 break
-        for i in range(12):
+            
+        for i in range(1, 12):
             y = square - i
             if y != square:
                 self.legal_moves.append(y)
+            if y in self.defender_sqrs:
+                break
             if y in self.topsquares:
                 break
-        for i in range(12):
+
+        for i in range(1, 12):
             z = square + i*11
             if z != square:
                 self.legal_moves.append(z)
+            if z in self.defender_sqrs:
+                break
             if z in self.rightsquares:
                 break
-        for i in range(12):
+
+        for i in range(1, 12):
             p = square - i*11
             if p != square:
                 self.legal_moves.append(p)
+            if p in self.defender_sqrs:
+                break
             if p in self.leftsquares:
                 break
+        
         for move in self.legal_moves:
             if move in self.attacker_sqrs:
                 self.legal_moves.remove(move)
