@@ -97,12 +97,17 @@ class Movehandler:
         
         self.legal_moves = [x for x in self.legal_moves if x not in self.attacker_sqrs]
         self.legal_moves = [x for x in self.legal_moves if x not in self.defender_sqrs]
+        #############################################################################
+        # for some reason there are negative square-numbers added to self.legal moves
+        # and it breaks self.write_legal.moves(), so...
+        self.legal_moves = [x for x in self.legal_moves if x > 0]
+        #############################################################################
         self.write_legal_moves(self.legal_moves)
         self.legal_moves = []
         
     def write_legal_moves(self, squares):
-        
+        """separated from get_legal_moves cause too long"""
         for square in squares:
-            
+            print(square)
             coord = self.settings.coordinates[square]
             self.legal_squares.append(coord)

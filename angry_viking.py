@@ -166,9 +166,12 @@ class AngryViking:
         self.movehandler.is_active = False
         self.defenders_position = []
         self.movehandler.defender_coords = []
+        self.movehandler.defender_sqrs = []
         self.attackers_position = []
         self.movehandler.attacker_coords = []
+        self.movehandler.attacker_sqrs = []
         self._get_start_coordinates()
+        
 if __name__ == ("__main__"):
 
     av = AngryViking()
