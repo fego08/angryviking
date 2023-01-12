@@ -100,7 +100,9 @@ class Movehandler:
         #############################################################################
         # for some reason there are negative square-numbers added to self.legal moves
         # and it breaks self.write_legal.moves(), so...
+        # also needs to be under 122...
         self.legal_moves = [x for x in self.legal_moves if x > 0]
+        self.legal_moves = [x for x in self.legal_moves if x < 122]
         #############################################################################
         self.write_legal_moves(self.legal_moves)
         self.legal_moves = []
